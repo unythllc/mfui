@@ -54,7 +54,7 @@ const ProductCard = (props: ProductCardProps) => {
           initial={{ opacity: 0 }}
           animate={{ opacity: isHovered ? 1 : 0 }}
           className={
-            "absolute top-2 right-2  p-1 flex justify-center items-center bg-dark-green rounded-full z-10"
+            "absolute top-2 right-2  p-1 flex justify-center items-center bg-dark-green rounded-full"
           }
         >
           <ExpandableCircle />

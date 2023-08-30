@@ -37,7 +37,7 @@ const ExpandableCircle = () => {
                 }
           }
           className={
-            " rounded-full h-8 py-2 flex items-center justify-center cursor-pointer text-xl font-medium overflow-x-auto whitespace-nowrap no-scrollbar"
+            "text-slate-700 rounded-full h-8 py-2 flex items-center justify-center cursor-pointer text-xl font-medium overflow-x-auto whitespace-nowrap no-scrollbar"
           }
         >
           Buy Now

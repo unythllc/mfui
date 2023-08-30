@@ -1,15 +1,14 @@
 "use client";
 import React, { useState } from "react";
-// import { useSelector, useDispatch } from "react-redux";
 import Link from "next/link";
 import { CartIcon, MFUILogo, UserIcon } from "@/icons/mfui";
-// import { clearAuth, setIsAuthenticated } from "../app/auth/authSlice";
-// import { setUrl } from "../app/activity/activitySlice"
+import { useAtom } from "jotai";
+import { toggleCartAtom } from "@/libs/jotai/store";
 
 export default function Navbar() {
   const [show, setShow] = useState(null);
   const [current, setCurrent] = useState("templates");
-  // const dispatch = useDispatch();
+  const [cartIsOpen, setCartIsOpen] = useAtom(toggleCartAtom);
 
   const isAuthenticated = false;
   const handleClick = (e: any) => {
@@ -18,8 +17,6 @@ export default function Navbar() {
 
   const logout = () => {
     localStorage.removeItem("token");
-    // dispatch(clearAuth());
-    // dispatch(setIsAuthenticated(false));
   };
 
   // const user = useSelector((state) => state.auth.username);
@@ -37,9 +34,9 @@ export default function Navbar() {
               <div className="inline-flex items-center justify-center p-2 rounded-md text-gray-700 hover:text-gray-100 focus:outline-none transition duration-150 ease-in-out">
                 <div className="visible xl:hidden">
                   <ul className="p-2 border-r bg-white absolute rounded left-0 right-0 shadow mt-8 md:mt-8 hidden">
-                    <li className="flex xl:hidden cursor-pointer text-gray-600 text-sm leading-3 tracking-normal mt-2 py-2 hover:text-indigo-700 focus:text-indigo-700 focus:outline-none">
+                    <li className="flex xl:hidden cursor-pointer text-gray-600 mt-2 py-2 ">
                       <div className="flex items-center">
-                        <span className="ml-2">WEBSITE TEMPLATES</span>
+                        <h4 className="ml-2">WEBSITE TEMPLATES</h4>
                       </div>
                     </li>
                     <li className="flex xl:hidden flex-col cursor-pointer text-gray-600 text-sm leading-3 tracking-normal py-2 hover:text-indigo-700 focus:text-indigo-700 focus:outline-none flex justify-center">
@@ -97,30 +94,20 @@ export default function Navbar() {
                   className="flex items-center cursor-pointer"
                 >
                   <MFUILogo className={"h-16 w-16 text-dark-red"} />
-                  {/* <h2
-                                        onClick={() => setCurrent('home')}
-                                        name="home"
-                                        className="hidden sm:block text-2xl text-dark-red font-black leading-normal pl-3">MFUi</h2> */}
                 </div>
               </Link>
             </div>
             <div className="flex flex-col">
               <div className="hidden xl:flex md:ml-20  items-center gap-x-20 text-xl font-medium cursor-pointer">
-                <Link
-                  href="#"
-                  className="flex px-5 items-center py-6 text-sm leading-5 text-gray-700 hover:bg-gray-100 focus:bg-gray-100 focus:outline-none transition duration-150 ease-in-out"
-                >
+                <Link href="#" className="flex items-center py-6">
                   <div className={"relative flex flex-col"}>
-                    <span
-                      onClick={() => setCurrent("templates")}
-                      className="mr-2"
-                    >
+                    <span onClick={() => setCurrent("templates")}>
                       Website Templates
                     </span>
                     {current === "templates" && (
                       <span
                         className={
-                          "absolute mt-6 text-4xl ml-16 text-dark-red font-sans"
+                          "absolute mt-6 text-4xl ml-16 translate-x-[50%] right-1/2 text-dark-green font-sans"
                         }
                       >
                         &bull;
@@ -128,21 +115,15 @@ export default function Navbar() {
                     )}
                   </div>
                 </Link>
-                <Link
-                  href="#"
-                  className="flex px-5 items-center py-6 text-sm leading-5 text-gray-700 hover:bg-gray-100 focus:bg-gray-100 focus:outline-none transition duration-150 ease-in-out"
-                >
+                <Link href="#" className="flex items-center py-6">
                   <div className={"relative flex flex-col cursor-pointer"}>
-                    <span
-                      onClick={() => setCurrent("components")}
-                      className="mr-2"
-                    >
+                    <span onClick={() => setCurrent("components")}>
                       Components
                     </span>
                     {current === "components" && (
                       <span
                         className={
-                          "absolute mt-6 text-4xl ml-12 text-dark-red font-sans"
+                          "absolute mt-6 text-4xl translate-x-[50%] right-1/2 text-dark-green font-sans"
                         }
                       >
                         &bull;
@@ -150,21 +131,15 @@ export default function Navbar() {
                     )}
                   </div>
                 </Link>
-                <Link
-                  href="/contact-us"
-                  className="flex px-5 items-center py-6 text-sm leading-5 text-gray-700 hover:bg-gray-100 focus:bg-gray-100 focus:outline-none transition duration-150 ease-in-out"
-                >
+                <Link href="/contact-us" className="flex items-center py-6">
                   <div className={"relative flex flex-col cursor-pointer"}>
-                    <span
-                      onClick={() => setCurrent("contactus")}
-                      className="mr-2"
-                    >
+                    <span onClick={() => setCurrent("contactus")}>
                       Contact Us
                     </span>
                     {current === "contactus" && (
                       <span
                         className={
-                          "absolute mt-6 text-4xl ml-10 text-dark-red font-sans"
+                          "absolute mt-6 text-4xl translate-x-[50%] right-1/2 text-dark-green font-sans"
                         }
                       >
                         &bull;
@@ -176,18 +151,19 @@ export default function Navbar() {
             </div>
             <div className="hidden xl:flex items-center gap-8">
               <div className="ml-6 relative cursor-pointer">
-                <Link href="/checkout">
-                  <button className={"relative bg-transparent"}>
-                    <CartIcon className={"h-10 w-10 mr-4 text-white"} />
-                    <div
-                      className={
-                        "absolute top-0 right-2 rounded-full bg-dark-green h-6 w-6 text-black"
-                      }
-                    >
-                      10
-                    </div>
-                  </button>
-                </Link>
+                <button
+                  onClick={() => setCartIsOpen(!cartIsOpen)}
+                  className={"relative bg-transparent"}
+                >
+                  <CartIcon className={"h-10 w-10 mr-4 fill-white"} />
+                  <div
+                    className={
+                      "absolute top-0 right-2 rounded-full bg-dark-green h-6 w-6 text-black"
+                    }
+                  >
+                    10
+                  </div>
+                </button>
               </div>
 
               {isAuthenticated ? (

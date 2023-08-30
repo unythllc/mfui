@@ -3,9 +3,9 @@ import { motion } from "framer-motion";
 
 type ButtonProps = {
   onClick: () => void;
-  type: string;
-  borderColor: string;
-  className: string;
+  type?: string;
+  borderColor?: string;
+  className?: string;
   children: React.ReactNode;
 };
 
@@ -23,7 +23,10 @@ const ButtonBorderHover = ({
 }: ButtonProps) => {
   return (
     <motion.button
-      className={className}
+      className={
+        className ??
+        "bg-dark-red hover:bg-red-500 text-white flex items-center justify-center border-0 rounded-full w-full h-12  cursor-pointer font-medium"
+      }
       onClick={onClick}
       type={type as ButtonType}
       // {...props}
