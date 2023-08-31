@@ -1,7 +1,7 @@
 "use client";
 import React from "react";
 
-import Image from "next/image";
+import Image from "next/legacy/image";
 import Ratings from "@/components/Ratings";
 import TechStack from "@/components/TechStack";
 import Link from "next/link";
