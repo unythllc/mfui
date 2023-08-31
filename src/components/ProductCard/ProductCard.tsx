@@ -1,7 +1,7 @@
 "use client";
 import React from "react";
 
-import Image from "next/legacy/image";
+import Image from "next/image";
 import Ratings from "@/components/Ratings";
 import TechStack from "@/components/TechStack";
 import Link from "next/link";
@@ -46,8 +46,11 @@ const ProductCard = (props: ProductCardProps) => {
           src="/static/arc.png"
           width={400}
           height={200}
-          layout={"responsive"}
-          className={"rounded-2xl"}
+          className={"rounded-2xl bg-dark-background"}
+          style={{
+            maxWidth: "100%",
+            height: "auto",
+          }}
         />
 
         <motion.div

@@ -1,3 +1,4 @@
+"use client";
 import { IconProps } from "@/types/iconType";
 import { motion } from "framer-motion";
 

@@ -1,10 +1,12 @@
+"use client";
 import React from "react";
 import { motion } from "framer-motion";
 
 type ButtonProps = {
-  onClick: () => void;
+  onClick?: () => void;
   type?: string;
   borderColor?: string;
+  borderWidth?: string;
   className?: string;
   children: React.ReactNode;
 };
@@ -16,10 +18,11 @@ enum ButtonType {
 
 const ButtonBorderHover = ({
   className,
-  type,
   children,
-  borderColor,
-  onClick,
+  onClick = () => {},
+  type = "button",
+  borderColor = "#fff",
+  borderWidth = "3px",
 }: ButtonProps) => {
   return (
     <motion.button
@@ -29,13 +32,12 @@ const ButtonBorderHover = ({
       }
       onClick={onClick}
       type={type as ButtonType}
-      // {...props}
       style={{
-        border: "0px solid #fff0",
+        border: `${borderWidth} solid #fff0`,
       }}
       whileHover={{
-        border: `3px solid ${borderColor}`,
-        transition: { duration: 0.2, ease: "easeIn" },
+        border: `${borderWidth} solid ${borderColor}`,
+        transition: { duration: 0.1, ease: "easeIn" },
       }}
     >
       {children}
