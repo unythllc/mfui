@@ -1,5 +1,6 @@
 "use client";
-import { Fragment, useState } from "react";
+import { Fragment } from "react";
+import Link from "next/link";
 import { Dialog, Transition } from "@headlessui/react";
 import { HiTrash, HiXMark } from "react-icons/hi2";
 import ButtonBorderHover from "../animations/ButtonBorderHover";
@@ -174,24 +175,28 @@ export default function ShoppingCart() {
                         Shipping and taxes calculated at checkout.
                       </p>
                       <div className="mt-6">
-                        <ButtonBorderHover
-                          borderColor="#fff"
-                          onClick={() => ({})}
-                        >
-                          Checkout
-                        </ButtonBorderHover>
+                        <Link href="/checkout">
+                          <ButtonBorderHover
+                            borderColor="#fff"
+                            onClick={() => ({})}
+                          >
+                            Checkout
+                          </ButtonBorderHover>
+                        </Link>
                       </div>
                       <div className="mt-6 flex justify-center text-center text-sm text-gray-500">
                         <p>
                           or
-                          <button
-                            type="button"
+                          <Link
                             className="font-medium text-red-600 hover:text-red-500"
-                            onClick={() => setOpen(false)}
+                            href="/checkout"
+                            // onClick={() => setOpen(false)}
                           >
-                            Continue Shopping
-                            <span aria-hidden="true"> &rarr;</span>
-                          </button>
+                            <p>
+                              Continue Shopping
+                              <span aria-hidden="true"> &rarr;</span>
+                            </p>
+                          </Link>
                         </p>
                       </div>
                     </div>
