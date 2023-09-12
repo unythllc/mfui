@@ -1,7 +1,7 @@
 import XMFUI from "@/icons/XMFUI";
 import { FaChevronDown } from "react-icons/fa";
 import ProductCard from "@/components/ProductCard";
-// import "prism-theme-night-owl";
+import DropDown from "@/components/ListBox/ListBox";
 
 function Main() {
   return (
@@ -21,9 +21,11 @@ function Main() {
               "flex justify-between text-lg font-medium text-white w-full my-8"
             }
           >
-            <div className={"flex items-center gap-4"}>
-              Price <FaChevronDown />
-            </div>
+            <DropDown
+              default="Category"
+              name={"energy"}
+              items={["-", "Guides", "Questions", "Troubleshooting"]}
+            />
             <div className={"flex items-center gap-4"}>
               Category <FaChevronDown />
             </div>
