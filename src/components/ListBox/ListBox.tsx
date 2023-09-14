@@ -2,11 +2,20 @@
 import React, { Fragment, useState } from "react";
 import { Listbox, Transition } from "@headlessui/react";
 
+type ListBoxProps = {
+  items: any;
+  default: string;
+  name: string;
+  handleChange: (e: any, name: string) => void;
+  heightAndBG?: string;
+  textAlignment?: string;
+};
+
 function classNames(...classes: string[]) {
   return classes.filter(Boolean).join(" ");
 }
 
-export default function DropDown(props: any) {
+export default function ListBox(props: ListBoxProps) {
   const [selected, setSelected] = useState(props.default);
 
   const handleChange = (e: any, name: string) => {
@@ -25,21 +34,17 @@ export default function DropDown(props: any) {
           <div className="mt-1 relative w-full">
             <Listbox.Button
               className={
-                "text-white font-bold relative w-full border-0 rounded-md shadow-sm pl-3 pr-10 text-left cursor-default focus:outline-none focus:ring-0 sm:text-xl " +
-                (props.heightAndBG ? props.heightAndBG : "bg-arcade-card h-10")
+                "text-white flex items-center justify-center font-bold relative w-full border-0 rounded-md shadow-sm pl-3 pr-10 text-left cursor-default focus:outline-none focus:ring-0 sm:text-xl bg-dark-gray h-10"
               }
             >
               <span
                 className={
-                  "block truncate " +
-                  (props.textAlignment ? props.textAlignment : "text-center")
+                  "block truncate " + props.textAlignment || "text-center"
                 }
               >
                 {selected === "-" ? props.default : selected}
               </span>
               <span className="absolute inset-y-0 right-0 flex items-center pr-6 pointer-events-none text-arcade-green">
-                {/* <SelectorIcon className="h-5 w-5 text-gray-400" aria-hidden="true" /> */}
-
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   className={"h-6 w-6 " + (open ? "transform rotate-180" : "")}
@@ -64,14 +69,14 @@ export default function DropDown(props: any) {
               leaveFrom="opacity-100"
               leaveTo="opacity-0"
             >
-              <Listbox.Options className="absolute z-10 mt-1 text-center w-full border-2 bg-arcade-dark-gray border-arcade-border shadow-lg max-h-72 rounded-md py-1 px-1 text-base ring-1 ring-black ring-opacity-5 overflow-auto focus:outline-none sm:text-sm">
+              <Listbox.Options className="absolute z-10 mt-1 text-center w-full border-2 bg-dark-background border-dark-red shadow-lg max-h-72 rounded-md py-1 px-1 text-base ring-1 ring-black ring-opacity-5 overflow-auto focus:outline-none sm:text-sm">
                 {props.items.map((item: any) => (
                   <Listbox.Option
                     key={item}
                     className={({ active }) =>
                       classNames(
                         active
-                          ? "text-white bg-arcade-card rounded font-bold"
+                          ? "text-white bg-dark-gray rounded font-bold"
                           : "text-white",
                         "cursor-default select-none relative py-2",
                       )

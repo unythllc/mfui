@@ -1,9 +1,14 @@
+"use client";
 import XMFUI from "@/icons/XMFUI";
 import { FaChevronDown } from "react-icons/fa";
 import ProductCard from "@/components/ProductCard";
-import DropDown from "@/components/ListBox/ListBox";
+import ListBox from "@/components/ListBox/ListBox";
 
 function Main() {
+  const handleSelect = (e: any) => {
+    console.log(e.target.value);
+  };
+
   return (
     <div
       className={
@@ -18,23 +23,27 @@ function Main() {
           <h1 className="text-4xl font-black text-dark-red mt-12">Browse By</h1>
           <div
             className={
-              "flex justify-between text-lg font-medium text-white w-full my-8"
+              "flex gap-x-6 justify-between text-lg font-medium text-white w-full my-8"
             }
           >
-            <DropDown
+            <ListBox
+              handleChange={handleSelect}
               default="Category"
               name={"energy"}
               items={["-", "Guides", "Questions", "Troubleshooting"]}
             />
-            <div className={"flex items-center gap-4"}>
-              Category <FaChevronDown />
-            </div>
-            <div className={"flex items-center gap-4"}>
-              Style <FaChevronDown />
-            </div>
-            <div className={"flex items-center gap-4"}>
-              Tags <FaChevronDown />
-            </div>
+            <ListBox
+              handleChange={handleSelect}
+              default="Styles"
+              name={"energy"}
+              items={["-", "Guides", "Questions", "Troubleshooting"]}
+            />
+            <ListBox
+              handleChange={handleSelect}
+              default="Tags"
+              name={"energy"}
+              items={["-", "Guides", "Questions", "Troubleshooting"]}
+            />
           </div>
         </div>
         <div

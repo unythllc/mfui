@@ -6,6 +6,9 @@ import { HiTrash, HiXMark } from "react-icons/hi2";
 import ButtonBorderHover from "../animations/ButtonBorderHover";
 import { toggleCartAtom } from "@/libs/jotai/store";
 import { useAtom } from "jotai";
+import { CheckoutSubscriptionBody } from "@/app/checkout-sessions/route";
+import { loadStripe } from "@stripe/stripe-js";
+import Stripe from "stripe";
 
 const products = [
   {
@@ -37,7 +40,33 @@ const products = [
 
 export default function ShoppingCart() {
   const [open, setOpen] = useAtom(toggleCartAtom);
+  const handleClick = async () => {
+    // step 1: load stripe
+    const STRIPE_PK = process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!;
+    const stripe = await loadStripe(STRIPE_PK);
 
+    // step 2: define the data for monthly subscription
+    const body: CheckoutSubscriptionBody = {
+      interval: "month",
+      amount: 2000,
+      plan: "Monthly",
+      planDescription: "Subscribe for $20 per month",
+    };
+
+    // step 3: make a post fetch api call to /checkout-session handler
+    const result = await fetch("/checkout-sessions", {
+      method: "post",
+      body: JSON.stringify(body, null),
+      headers: {
+        "content-type": "application/json",
+      },
+    });
+
+    // step 4: get the data and redirect to checkout using the sessionId
+    const data = (await result.json()) as Stripe.Checkout.Session;
+    const sessionId = data.id!;
+    stripe?.redirectToCheckout({ sessionId });
+  };
   return (
     <Transition.Root show={open} as={Fragment}>
       <Dialog as="div" className="relative z-40" onClose={setOpen}>
@@ -175,14 +204,12 @@ export default function ShoppingCart() {
                         Shipping and taxes calculated at checkout.
                       </p>
                       <div className="mt-6">
-                        <Link href="/checkout">
-                          <ButtonBorderHover
-                            borderColor="#fff"
-                            onClick={() => ({})}
-                          >
-                            Checkout
-                          </ButtonBorderHover>
-                        </Link>
+                        <ButtonBorderHover
+                          borderColor="#fff"
+                          onClick={() => handleClick()}
+                        >
+                          Checkout
+                        </ButtonBorderHover>
                       </div>
                       <div className="mt-6 flex justify-center text-center text-sm text-gray-500">
                         <p>
@@ -190,7 +217,6 @@ export default function ShoppingCart() {
                           <Link
                             className="font-medium text-red-600 hover:text-red-500"
                             href="/checkout"
-                            // onClick={() => setOpen(false)}
                           >
                             <p>
                               Continue Shopping
