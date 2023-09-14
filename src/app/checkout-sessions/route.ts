@@ -7,36 +7,41 @@ export interface CheckoutSubscriptionBody {
   plan: string;
   planDescription: string;
   amount: number;
-  interval: "month" | "year";
   customerId?: string;
 }
 
+export type CheckoutProductBody = {
+  name: string;
+  description: string;
+  price: number;
+  customerEmail?: string;
+};
+
 export async function POST(req: Request) {
-  const body = (await req.json()) as CheckoutSubscriptionBody;
+  const body = (await req.json()) as CheckoutProductBody;
   const origin = req.headers.get("origin") || "http://localhost:3000";
 
   // if user is logged in, redirect to thank you page, otherwise redirect to signup page.
-  const success_url = !body.customerId
+  const success_url = !body.customerEmail
     ? `${origin}/signup?session_id={CHECKOUT_SESSION_ID}`
     : `${origin}/thankyou?session_id={CHECKOUT_SESSION_ID}`;
 
   try {
     const session = await stripe.checkout.sessions.create({
       // if user is logged in, stripe will set the email in the checkout page
-      customer: body.customerId,
-      mode: "subscription", // mode should be subscription
+      // customer: body.customerId,
+      customer_email: "fabian.rodrez@gmail.com",
+      billing_address_collection: "auto",
+      mode: "payment", // mode should be subscription
       line_items: [
         // generate inline price and product
         {
           price_data: {
             currency: "usd",
-            recurring: {
-              interval: body.interval,
-            },
-            unit_amount: body.amount,
+            unit_amount: body.price,
             product_data: {
-              name: body.plan,
-              description: body.planDescription,
+              name: body.name,
+              description: body.description,
             },
           },
           quantity: 1,

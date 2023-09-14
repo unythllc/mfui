@@ -6,7 +6,10 @@ import { HiTrash, HiXMark } from "react-icons/hi2";
 import ButtonBorderHover from "../animations/ButtonBorderHover";
 import { toggleCartAtom } from "@/libs/jotai/store";
 import { useAtom } from "jotai";
-import { CheckoutSubscriptionBody } from "@/app/checkout-sessions/route";
+import {
+  CheckoutProductBody,
+  CheckoutSubscriptionBody,
+} from "@/app/checkout-sessions/route";
 import { loadStripe } from "@stripe/stripe-js";
 import Stripe from "stripe";
 
@@ -46,11 +49,10 @@ export default function ShoppingCart() {
     const stripe = await loadStripe(STRIPE_PK);
 
     // step 2: define the data for monthly subscription
-    const body: CheckoutSubscriptionBody = {
-      interval: "month",
-      amount: 2000,
-      plan: "Monthly",
-      planDescription: "Subscribe for $20 per month",
+    const body: CheckoutProductBody = {
+      price: 100,
+      name: "Component 1",
+      description: "Component 1 description",
     };
 
     // step 3: make a post fetch api call to /checkout-session handler

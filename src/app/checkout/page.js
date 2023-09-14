@@ -27,38 +27,15 @@ export default function PreviewPage() {
 
   return (
     <form action="/api/checkout_sessions" method="POST">
-      <section>
-        <button type="submit" role="link">
+      <section className="bg-white flex flex-col w-[400px] h-[112px] rounded-xl justify-between">
+        <button
+          type="submit"
+          role="link"
+          className="h-10 bg-dark-red rounded-md cursor-pointer font-semibold text-white border-none hover:opacity-80 transition ease-in"
+        >
           Checkout
         </button>
       </section>
-      <style jsx>
-        {`
-          section {
-            background: #ffffff;
-            display: flex;
-            flex-direction: column;
-            width: 400px;
-            height: 112px;
-            border-radius: 6px;
-            justify-content: space-between;
-          }
-          button {
-            height: 36px;
-            background: #556cd6;
-            border-radius: 4px;
-            color: white;
-            border: 0;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            box-shadow: 0px 4px 5.5px 0px rgba(0, 0, 0, 0.07);
-          }
-          button:hover {
-            opacity: 0.8;
-          }
-        `}
-      </style>
     </form>
   );
 }
